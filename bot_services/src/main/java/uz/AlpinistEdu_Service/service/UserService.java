@@ -5,8 +5,7 @@ import uz.AlpinistEdu_Service.enums.*;
 import uz.AlpinistEdu_Service.model.User;
 import uz.AlpinistEdu_Service.utils.DataUtils;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class UserService implements BaseService<User>{
 
@@ -25,7 +24,11 @@ public class UserService implements BaseService<User>{
 
     @Override
     public User get(UUID user) {
-        return null;
+        List<User> users = read();
+        return users.stream()
+                .filter(u -> Objects.equals(u.getId(), user))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -35,7 +38,11 @@ public class UserService implements BaseService<User>{
 
     @Override
     public User getById(UUID id) {
-        return null;
+        List<User> users = read();
+        return users.stream()
+                .filter(u -> Objects.equals(u.getId(), id))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -45,7 +52,8 @@ public class UserService implements BaseService<User>{
 
     @Override
     public List<User> read() {
-        return DataUtils.read(PATH, new TypeReference<List<User>>() {});
+        return DataUtils.read(PATH, new TypeReference<>() {
+        });
     }
 
     @Override

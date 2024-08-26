@@ -10,6 +10,7 @@
         <module name="AlpinistCoin" />
         <module name="bot_services" />
         <module name="AlpinistCoin (1)" />
+        <module name="AlpinistCoin (2)" />
       </profile>
     </annotationProcessing>
   </component>
