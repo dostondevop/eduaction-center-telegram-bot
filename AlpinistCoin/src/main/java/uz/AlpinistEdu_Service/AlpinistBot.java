@@ -2,15 +2,18 @@ package uz.AlpinistEdu_Service;
 
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
+import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import uz.AlpinistEdu_Service.control.interfaces.BaseInterface;
 import uz.AlpinistEdu_Service.enums.*;
 import uz.AlpinistEdu_Service.model.User;
 import uz.AlpinistEdu_Service.utils.*;
 
+import java.util.List;
 import java.util.UUID;
 
 public class AlpinistBot extends TelegramLongPollingBot {
@@ -74,7 +77,21 @@ public class AlpinistBot extends TelegramLongPollingBot {
     }
 
     private void adminOperationsForMessage(Update update) {
-        //TODO MIRZAAHMAD
+        Integer messageId = update.getMessage().getMessageId();
+        Message message = update.getMessage();
+        Long chatId = message.getChatId();
+        String messageText = message.getText();
+        User user = ObjectUtils.userService.getUserByChatId(chatId);
+
+        ReplyKeyboard replyKeyboard1 = ObjectUtils.menuService.getMainMenu(chatId);
+        ReplyKeyboard replyKeyboard2 = ObjectUtils.menuService.getSecondInnerMenu(chatId, messageText);
+        SendMessage sendMessage = ObjectUtils.menuService.getSendMessage(chatId, messageText);
+
+        if (user.getUserState().equals(UserState.SHOW_MAIN_MENU)) {
+            execute(chatId, "Select from the menu", replyKeyboard1);
+        } else if (replyKeyboard2 != null) {
+            execute(chatId, "Select from the menu!", replyKeyboard2);
+        }
     }
 
     private void studentOperationsForMessage(Update update) {
@@ -133,6 +150,21 @@ public class AlpinistBot extends TelegramLongPollingBot {
             execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void forwardMessageToAllUsers(Long chatId, Integer messageId) {
+        List<User> users = ObjectUtils.userService.getList();
+        for (User user : users) {
+            try {
+                ForwardMessage forwardMessage = new ForwardMessage();
+                forwardMessage.setChatId(user.getChatId().toString());
+                forwardMessage.setFromChatId(chatId.toString());
+                forwardMessage.setMessageId(messageId);
+                execute(forwardMessage);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
         }
     }
 

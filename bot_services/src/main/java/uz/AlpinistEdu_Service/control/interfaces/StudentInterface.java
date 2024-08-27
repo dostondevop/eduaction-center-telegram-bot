@@ -12,14 +12,15 @@ public class StudentInterface implements BaseInterface {
         List<String> buttons = List.of("Coins", "Market", "Teachers", "Courses");
         return BotUtil.replyKeyboardMarkup(buttons, 2);
     }
-
+    
     @Override
-    public ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName) {
+    public ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName, Long chatId) {
+
         return null;
     }
 
     @Override
-    public SendMessage sendMessage(String buttonName, String chatId) {
+    public SendMessage sendMessage(String buttonName, Long chatId) {
         return null;
     }
 }
