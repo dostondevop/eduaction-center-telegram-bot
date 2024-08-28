@@ -10,12 +10,12 @@ public class GuestInterface implements BaseInterface {
     }
 
     @Override
-    public ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName) {
+    public ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName, Long chatId) {
         return null;
     }
 
     @Override
-    public SendMessage sendMessage(String buttonName, String chatId) {
+    public SendMessage sendMessage(String buttonName, Long chatId) {
         return null;
     }
 }
