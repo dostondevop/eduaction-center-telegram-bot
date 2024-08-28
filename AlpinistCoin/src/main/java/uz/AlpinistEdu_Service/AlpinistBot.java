@@ -8,45 +8,43 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import uz.AlpinistEdu_Service.control.interfaces.BaseInterface;
-import uz.AlpinistEdu_Service.enums.*;
+import uz.AlpinistEdu_Service.BotService.MenuBotService;
+import uz.AlpinistEdu_Service.BotService.UserBotService;
+import uz.AlpinistEdu_Service.Factory.UserFactory;
+import uz.AlpinistEdu_Service.enums.UserState;
+import uz.AlpinistEdu_Service.enums.UserType;
 import uz.AlpinistEdu_Service.model.User;
-import uz.AlpinistEdu_Service.utils.*;
+import uz.AlpinistEdu_Service.utils.BotConstanta;
+import uz.AlpinistEdu_Service.utils.BotUtil;
 
 import java.util.List;
-import java.util.UUID;
 
 public class AlpinistBot extends TelegramLongPollingBot {
 
     private static final String BOT_USERNAME = "https://t.me/alpinistCoin_bot";
     private static final String BOT_TOKEN = "7426033702:AAH0bCrGW_pcEANFr5YnqVbROAuzSTHqKOs";
+    private static UserBotService userBotService = new UserBotService();
+    private static MenuBotService menuBotService = new MenuBotService();
+    private static UserFactory userFactory = new UserFactory();
 
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
             Message message = update.getMessage();
             Long chatId = message.getChatId();
-            User user = ObjectUtils.userService.getUserByChatId(chatId);
+            User user = userBotService.getUserByChatId(chatId);
 
-            if (("/start").equalsIgnoreCase(message.getText())) {
+            if (BotConstanta.START.equalsIgnoreCase(message.getText())) {
                 sendPhoneNumberRequest(message.getChatId());
-                user.setUserState(UserState.GET_CONTACT);
             } else if (user.getUserState() == UserState.GET_CONTACT & message.hasContact()) {
                 String phoneNumber = message.getContact().getPhoneNumber();
-                user = User.builder()
-                        .id(UUID.randomUUID())
-                        .chatId(chatId)
-                        .name((message.getChat().getFirstName() != null ? message.getChat().getFirstName() : "") + " " + (message.getChat().getLastName() != null ? message.getChat().getLastName() : ""))
-                        .userName(message.getChat().getUserName())
-                        .contact(phoneNumber)
-                        .userType(UserType.GUEST)
-                        .userState(UserState.SHOW_MAIN_MENU)
-                        .build();
-//                bot can request to botService and botService request to services
-                ObjectUtils.userService.add(user);
-                sendMessage(chatId, "Hello " + user.getName() + "! You have been registered as a guest.");
-                ReplyKeyboard replyKeyboardMarkup = ObjectUtils.menuService.getMainMenu(chatId);
-                execute(chatId, "Select from the menu!", replyKeyboardMarkup);
+                String name = (message.getChat().getFirstName() != null ? message.getChat().getFirstName() : "") + " " + (message.getChat().getLastName() != null ? message.getChat().getLastName() : "");
+                String username = message.getChat().getUserName();
+                user = userFactory.createDefaultUser(chatId, name, username, phoneNumber);
+                userBotService.add(user);
+                sendMessage(chatId, BotConstanta.HELLO + user.getName() + BotConstanta.REGISTERED_AS_GUEST);
+                ReplyKeyboard replyKeyboardMarkup = menuBotService.getMainMenu(chatId);
+                execute(chatId,BotConstanta.SELECT_FROM_MENU, replyKeyboardMarkup);
             } else if (user.getUserType().equals(UserType.GUEST)) {
                 guestOperationsForMessage(update);
             } else if (user.getUserType().equals(UserType.ADMIN)) {
@@ -58,7 +56,7 @@ public class AlpinistBot extends TelegramLongPollingBot {
             }
         } else if (update.hasCallbackQuery()) {
             Long chatId = update.getMessage().getChatId();
-            User user = ObjectUtils.userService.getUserByChatId(chatId);
+            User user = userBotService.getUserByChatId(chatId);
 
             if (user.getUserType().equals(UserType.GUEST)) {
                 guestOperationsForCallbackQuery(update);
@@ -80,16 +78,16 @@ public class AlpinistBot extends TelegramLongPollingBot {
         Message message = update.getMessage();
         Long chatId = message.getChatId();
         String messageText = message.getText();
-        User user = ObjectUtils.userService.getUserByChatId(chatId);
+        User user = userBotService.getUserByChatId(chatId);
 
-        ReplyKeyboard replyKeyboard1 = ObjectUtils.menuService.getMainMenu(chatId);
-        ReplyKeyboard replyKeyboard2 = ObjectUtils.menuService.getSecondInnerMenu(chatId, messageText);
-        SendMessage sendMessage = ObjectUtils.menuService.getSendMessage(chatId, messageText);
+        ReplyKeyboard replyKeyboard1 = menuBotService.getMainMenu(chatId);
+        ReplyKeyboard replyKeyboard2 = menuBotService.getSecondInnerMenu(chatId, messageText);
+        SendMessage sendMessage = menuBotService.getSendMessage(chatId, messageText);
 
         if (user.getUserState().equals(UserState.SHOW_MAIN_MENU)) {
-            execute(chatId, "Select from the menu", replyKeyboard1);
+            execute(chatId, BotConstanta.SELECT_FROM_MENU, replyKeyboard1);
         } else if (replyKeyboard2 != null) {
-            execute(chatId, "Select from the menu!", replyKeyboard2);
+            execute(chatId, BotConstanta.SELECT_FROM_MENU, replyKeyboard2);
         }
     }
 
@@ -141,7 +139,7 @@ public class AlpinistBot extends TelegramLongPollingBot {
     private void sendPhoneNumberRequest(Long chatId) {
         SendMessage message = new SendMessage();
         message.setChatId(chatId.toString());
-        message.setText("Please share your phone number:");
+        message.setText(BotConstanta.PLEASE_SHARE_PHONE_NUMBER);
 
         message.setReplyMarkup(BotUtil.getRequestPhoneNumberKeyboard());
 
@@ -153,7 +151,7 @@ public class AlpinistBot extends TelegramLongPollingBot {
     }
 
     public void forwardMessageToAllUsers(Long chatId, Integer messageId) {
-        List<User> users = ObjectUtils.userService.getList();
+        List<User> users = userBotService.getList();
         for (User user : users) {
             try {
                 ForwardMessage forwardMessage = new ForwardMessage();

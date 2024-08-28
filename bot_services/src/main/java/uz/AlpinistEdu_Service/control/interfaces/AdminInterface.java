@@ -1,9 +1,7 @@
 package uz.AlpinistEdu_Service.control.interfaces;
 
-import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.AlpinistEdu_Service.enums.UserState;
 import uz.AlpinistEdu_Service.model.User;
 import uz.AlpinistEdu_Service.utils.BotUtil;
