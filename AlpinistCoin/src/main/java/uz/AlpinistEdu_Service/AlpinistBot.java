@@ -42,7 +42,7 @@ public class AlpinistBot extends TelegramLongPollingBot {
                         .userType(UserType.GUEST)
                         .userState(UserState.SHOW_MAIN_MENU)
                         .build();
-                System.out.println(user);
+//                bot can request to botService and botService request to services
                 ObjectUtils.userService.add(user);
                 sendMessage(chatId, "Hello " + user.getName() + "! You have been registered as a guest.");
                 ReplyKeyboard replyKeyboardMarkup = ObjectUtils.menuService.getMainMenu(chatId);
@@ -77,7 +77,6 @@ public class AlpinistBot extends TelegramLongPollingBot {
     }
 
     private void adminOperationsForMessage(Update update) {
-        Integer messageId = update.getMessage().getMessageId();
         Message message = update.getMessage();
         Long chatId = message.getChatId();
         String messageText = message.getText();
