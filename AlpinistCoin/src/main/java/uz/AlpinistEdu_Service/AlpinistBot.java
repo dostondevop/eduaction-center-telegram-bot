@@ -12,6 +12,7 @@ import uz.AlpinistEdu_Service.BotService.MenuBotService;
 import uz.AlpinistEdu_Service.BotService.UserBotService;
 import uz.AlpinistEdu_Service.Factory.UserFactory;
 import uz.AlpinistEdu_Service.control.interfaces.BaseInterface;
+import uz.AlpinistEdu_Service.control.interfaces.GuestInterface;
 import uz.AlpinistEdu_Service.enums.*;
 import uz.AlpinistEdu_Service.model.User;
 import uz.AlpinistEdu_Service.utils.*;
@@ -20,8 +21,11 @@ import javax.ws.rs.HEAD;
 import java.util.List;
 import java.util.UUID;
 
-import static uz.AlpinistEdu_Service.utils.ObjectUtils.menuService;
-import static uz.AlpinistEdu_Service.utils.ObjectUtils.userService;
+import static uz.AlpinistEdu_Service.enums.UserState.SHOW_MAIN_MENU;
+import static uz.AlpinistEdu_Service.enums.UserState.SHOW_SECOND_MENU;
+import static uz.AlpinistEdu_Service.utils.BotButtonsUtill.getInfo;
+import static uz.AlpinistEdu_Service.utils.MessagesUtill.TEXT_RUS_TILI;
+import static uz.AlpinistEdu_Service.utils.ObjectUtils.*;
 
 public class AlpinistBot extends TelegramLongPollingBot {
 
@@ -81,18 +85,130 @@ public class AlpinistBot extends TelegramLongPollingBot {
         String text = message.getText();
         if (("Markaz haqida").equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
         } else if (("Bizning Ustozlarimiz").equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
         } else if (("Kurslarimiz").equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
         } else if (("Filiallarimiz").equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
         } else if (("Mutaxassis bilan aloqa").equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
         } else if (("Imtihonga ro'yxatdan o'tish").equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
         } else if (("\uD83D\uDD19Orqaga").equals(text)) {
-            execute(chatId, "Menu", menuService.getMainMenu(chatId));
+            if (user.getUserState() == SHOW_SECOND_MENU) {
+                user.setUserState(SHOW_MAIN_MENU);
+                userBotService.update(user);
+                execute(chatId, "Menu", menuService.getMainMenu(chatId));
+            }
+        } else if (("Ingliz Tili").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Rus Tili").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Matematika").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Mental Arifmetika").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Umumiy ma'lumotlar").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Afzalliklar").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Yutuqlar").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Mr Fazliddin").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Mr Sunnat").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Ms Liliya").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Ms Aziza").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Mr Javoxir").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Mr MirzaAhmad").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Tel:").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Gmail:").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (("Ro'yxatdan o'tish").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            try {
+                execute(guestInterface.sendMessage(text, chatId));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -105,7 +221,7 @@ public class AlpinistBot extends TelegramLongPollingBot {
         ReplyKeyboard replyKeyboard1 = menuBotService.getMainMenu(chatId);
         ReplyKeyboard replyKeyboard2 = menuBotService.getSecondInnerMenu(chatId, messageText);
 
-        if (user.getUserState().equals(UserState.SHOW_MAIN_MENU)) {
+        if (user.getUserState().equals(SHOW_MAIN_MENU)) {
             execute(chatId, BotConstanta.SELECT_FROM_MENU, replyKeyboard1);
         } else if (replyKeyboard2 != null) {
             execute(chatId, BotConstanta.SELECT_FROM_MENU, replyKeyboard2);

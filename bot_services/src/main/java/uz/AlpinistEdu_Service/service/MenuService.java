@@ -31,18 +31,9 @@ public class MenuService {
         User currentUser = userService.getUserByChatId(chatId);
         return UI_STRATEGY_MAP.get(currentUser != null ? currentUser.getUserType() : null).replyKeyboardSecondInnerMenu(buttonName, chatId);
     }
-    public SendMessage getReplyMessageThirdInnerMenu(Long chatId, String buttonName) {
-        User currentUser = userService.getUserByChatId(chatId);
-        return UI_STRATEGY_MAP.get(currentUser != null? currentUser.getUserType() : null).sendMessage(buttonName, chatId);
-    }
 
     public SendMessage getSendMessage(Long chatId, String buttonName) {
         User currentUser = userService.getUserByChatId(chatId);
         return UI_STRATEGY_MAP.get(currentUser != null ? currentUser.getUserType() : null).sendMessage(buttonName, chatId);
-    }
-
-    public SendMessage sendMessage(String buttonName, Long chatId) {
-        User currentUser = userService.getUserByChatId(chatId);
-        return UI_STRATEGY_MAP.get(currentUser!= null? currentUser.getUserType() : null).sendMessage(buttonName, chatId);
     }
 }

@@ -4,6 +4,8 @@ import lombok.experimental.UtilityClass;
 
 import java.util.*;
 
+import static uz.AlpinistEdu_Service.utils.MessagesUtill.*;
+
 @UtilityClass
 public class BotButtonsUtill {
     public static final List<String> GUEST_MAIN_MENU_BUTTONS = List.of(
@@ -12,8 +14,7 @@ public class BotButtonsUtill {
             "Filiallarimiz",
             "Bizning Ustozlarimiz",
             "Mutaxassis bilan aloqa",
-            "Imtihonga ro'yxatdan o'tish",
-            "\uD83D\uDD19Orqaga");
+            "Imtihonga ro'yxatdan o'tish");
 
     public static final Map<String, List<String>> SECOND_MENU_OPTIONS = Map.of(
             "Markaz haqida", List.of(
@@ -34,7 +35,7 @@ public class BotButtonsUtill {
             "Kurslarimiz", List.of(
                     "Ingliz Tili",
                     "Matematika",
-                    "Rus tili",
+                    "Rus Tili",
                     "Mental Arifmetika",
                     "\uD83D\uDD19Orqaga"
             ),
@@ -61,21 +62,21 @@ public class BotButtonsUtill {
     public static String getInfo(String buttonName) {
         switch (buttonName) {
             case "Ingliz Tili" -> {
-                return  "Ingliz tili haqida ma'lumot...";
+                return  TEXT_INGLIZ_TILI;
             }
             case "Matematika" -> {
-                return  "Matematika haqida ma'lumot...";
+                return  TEXT_MATHEMATIKA;
             }
-            case "Rus tili" -> {
-                return "Rus tili haqida ma'lumot...";
+            case "Rus Tili" -> {
+                return TEXT_RUS_TILI;
             }
-            case "Mental Arifmetika" ->{
-                return "Mental arifmetika haqida ma'lumot...";
+            case "Mental Arifmetika" -> {
+                return TEXT_MENTAL_ARIFMETIKA;
             }
 
             // About us options
             case "Umumiy ma'lumotlar" -> {
-                return "Markaz haqida umumiy ma'lumotlar...";
+                return TEXT_ABOUT_LEARNING_CENTER;
             }
             case "Afzalliklar" -> {
                 return "Markazimizning afzalliklari...";
@@ -104,13 +105,35 @@ public class BotButtonsUtill {
 
             // Contact options
             case "Tel:" -> {
-                return "Bizning telefon raqamimiz: +998 XX XXX XXX";
+                return TEXT_PHONE_NUMBER;
             }
             case "Gmail:" -> {
                 return "Bizning Gmail manzilimiz: [alpinistedu@gmail.com](mailto:muxammadaminerkinboev6899@gmail.com)";
             }
+
+            // Subscription options
             case "Ro'yxatdan o'tish" -> {
                 return "Imtihonga ro'yxatdan o'tish uchun quyidagi linkni bosing: [Ro'yxatdan o'tish](https://pdp.uz/)";
+            }
+
+            // Teacher options
+            case "Mr Fazliddin" -> {
+                return TEXT_TEACHER_FAZLIDDIN;
+            }
+            case "Mr Sunnat" -> {
+                return TEXT_TEACHER_SUNNAT;
+            }
+            case "Ms Liliya" -> {
+                return TEXT_TEACHER_LILIYA;
+            }
+            case "Ms Aziza" -> {
+                return TEXT_TEACHER_AZIZA;
+            }
+            case "Mr Javoxir" -> {
+                return TEXT_TEACHER_JAVOXIR;
+            }
+            case "Mr MirzaAhmad" -> {
+                return TEXT_TEACHER_MIRZAAHMAD;
             }
             default -> {
                 return "Tanlangan bo'lim uchun ma'lumot mavjud emas.";
