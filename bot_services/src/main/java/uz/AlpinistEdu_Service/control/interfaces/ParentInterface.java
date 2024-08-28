@@ -10,7 +10,7 @@ public class ParentInterface implements BaseInterface {
     }
 
     @Override
-    public ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName) {
+    public ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName, Long chatId) {
         return null;
     }
 
