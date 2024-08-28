@@ -23,11 +23,10 @@ public class AlpinistBot extends TelegramLongPollingBot {
         if (update.hasMessage()) {
             Message message = update.getMessage();
             Long chatId = message.getChatId();
-            User user = ObjectUtils.userService.getUserByChatId(chatId);
+            User user = ObjectUtils.userService.getUserByChatId(chatId);//
 
             if (("/start").equalsIgnoreCase(message.getText())) {
                 sendPhoneNumberRequest(message.getChatId());
-                user.setUserState(UserState.GET_CONTACT);
             } else if (user.getUserState() == UserState.GET_CONTACT & message.hasContact()) {
                 String phoneNumber = message.getContact().getPhoneNumber();
                 user = User.builder()
