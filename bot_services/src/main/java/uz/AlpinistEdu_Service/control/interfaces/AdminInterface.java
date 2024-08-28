@@ -23,7 +23,7 @@ public class AdminInterface implements BaseInterface {
     }
 
     @Override
-    public SendMessage sendMessage(String buttonName, String chatId) {
+    public SendMessage sendMessage(String buttonName, Long chatId) {
         return null;
     }
 }

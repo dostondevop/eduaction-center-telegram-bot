@@ -33,7 +33,8 @@ public class UserService implements BaseService<User>{
 
     @Override
     public boolean has(User user, List<User> list) {
-        return list.stream().anyMatch(u -> u.getChatId().equals(user.getChatId()));
+        return list.stream()
+                .anyMatch(u -> u.getChatId().equals(user.getChatId()));
     }
 
     @Override
@@ -72,5 +73,17 @@ public class UserService implements BaseService<User>{
             newUser.setUserType(UserType.GUEST);
             return newUser;
         });
+    }
+
+    public void updateUserState(User user) {
+        List<User> users = read();
+
+        int index = users.indexOf(users.stream()
+               .filter(u -> Objects.equals(u.getChatId(), user.getChatId()))
+               .findFirst()
+               .orElseThrow(RuntimeException::new));
+
+        users.set(index,user);
+        write(users);
     }
 }

@@ -13,21 +13,23 @@ import uz.AlpinistEdu_Service.utils.*;
 
 import java.util.UUID;
 
+import static uz.AlpinistEdu_Service.utils.ObjectUtils.menuService;
+import static uz.AlpinistEdu_Service.utils.ObjectUtils.userService;
+
 public class AlpinistBot extends TelegramLongPollingBot {
 
-    private static final String BOT_USERNAME = "https://t.me/alpinistCoin_bot";
-    private static final String BOT_TOKEN = "7426033702:AAH0bCrGW_pcEANFr5YnqVbROAuzSTHqKOs";
+    private static final String BOT_USERNAME = "https://t.me/Muhammadamin571_bot";
+    private static final String BOT_TOKEN = "7531670880:AAHsCDKmhsnKDTjmzkzimBXfmPeIgR1U5rg";
 
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()) {
             Message message = update.getMessage();
             Long chatId = message.getChatId();
-            User user = ObjectUtils.userService.getUserByChatId(chatId);
+            User user = userService.getUserByChatId(chatId);
 
             if (("/start").equalsIgnoreCase(message.getText())) {
                 sendPhoneNumberRequest(message.getChatId());
-                user.setUserState(UserState.GET_CONTACT);
             } else if (user.getUserState() == UserState.GET_CONTACT & message.hasContact()) {
                 String phoneNumber = message.getContact().getPhoneNumber();
                 user = User.builder()
@@ -40,12 +42,15 @@ public class AlpinistBot extends TelegramLongPollingBot {
                         .userState(UserState.SHOW_MAIN_MENU)
                         .build();
                 System.out.println(user);
-                ObjectUtils.userService.add(user);
+
+                userService.add(user);
                 sendMessage(chatId, "Hello " + user.getName() + "! You have been registered as a guest.");
-                ReplyKeyboard replyKeyboardMarkup = ObjectUtils.menuService.getMainMenu(chatId);
+                ReplyKeyboard replyKeyboardMarkup = menuService.getMainMenu(chatId);
+                user.setUserState(UserState.SHOW_SECOND_INNER_MENU);
+                userService.updateUserState(user);
                 execute(chatId, "Select from the menu!", replyKeyboardMarkup);
-            } else if (user.getUserType().equals(UserType.GUEST)) {
-                guestOperationsForMessage(update);
+            } else if (user.getUserState() == UserState.SHOW_SECOND_INNER_MENU && user.getUserType().equals(UserType.GUEST)) {
+                guestOperationsForMessage(update, user);
             } else if (user.getUserType().equals(UserType.ADMIN)) {
                 adminOperationsForMessage(update);
             } else if (user.getUserType().equals(UserType.STUDENT)) {
@@ -55,7 +60,7 @@ public class AlpinistBot extends TelegramLongPollingBot {
             }
         } else if (update.hasCallbackQuery()) {
             Long chatId = update.getMessage().getChatId();
-            User user = ObjectUtils.userService.getUserByChatId(chatId);
+            User user = userService.getUserByChatId(chatId);
 
             if (user.getUserType().equals(UserType.GUEST)) {
                 guestOperationsForCallbackQuery(update);
@@ -69,8 +74,25 @@ public class AlpinistBot extends TelegramLongPollingBot {
         }
     }
 
-    private void guestOperationsForMessage(Update update) {
-     //TODO MUHAMMADAMIN
+    private void guestOperationsForMessage(Update update, User user) {
+        Message message = update.getMessage();
+        Long chatId = message.getChatId();
+        String text = message.getText();
+        if (("Markaz haqida").equals(text)) {
+            execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+        } else if (("Bizning Ustozlarimiz").equals(text)) {
+            execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+        } else if (("Kurslarimiz").equals(text)) {
+            execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+        } else if (("Filiallarimiz").equals(text)) {
+            execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+        } else if (("Mutaxassis bilan aloqa").equals(text)) {
+            execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+        } else if (("Imtihonga ro'yxatdan o'tish").equals(text)) {
+            execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
+        } else if (("\uD83D\uDD19Orqaga").equals(text)) {
+            execute(chatId, "Menu", menuService.getMainMenu(chatId));
+        }
     }
 
     private void adminOperationsForMessage(Update update) {
@@ -128,7 +150,6 @@ public class AlpinistBot extends TelegramLongPollingBot {
         message.setText("Please share your phone number:");
 
         message.setReplyMarkup(BotUtil.getRequestPhoneNumberKeyboard());
-
         try {
             execute(message);
         } catch (TelegramApiException e) {

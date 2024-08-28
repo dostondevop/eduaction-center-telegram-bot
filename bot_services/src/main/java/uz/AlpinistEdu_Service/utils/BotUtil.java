@@ -96,7 +96,6 @@ public class BotUtil {
             button.setText("Group TimeTable " + groupTimeTable.getId());
             callbackData = CallBackUtils.GROUP_TIME_TABLE + groupTimeTable.getId();
         }
-
         button.setCallbackData(callbackData);
         return button;
     }

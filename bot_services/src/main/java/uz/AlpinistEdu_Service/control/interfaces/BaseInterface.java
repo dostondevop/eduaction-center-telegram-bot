@@ -7,5 +7,5 @@ public interface BaseInterface {
 
     ReplyKeyboard replyKeyboardStartMenu();
     ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName);
-    SendMessage sendMessage(String buttonName, String chatId);
+    SendMessage sendMessage(String buttonName, Long chatId);
 }

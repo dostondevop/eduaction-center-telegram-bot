@@ -1,5 +1,6 @@
 package uz.AlpinistEdu_Service.service;
 
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import uz.AlpinistEdu_Service.model.User;
 import uz.AlpinistEdu_Service.enums.UserType;
 import uz.AlpinistEdu_Service.utils.ObjectUtils;
@@ -27,5 +28,10 @@ public class MenuService {
     public ReplyKeyboard getSecondInnerMenu(long chatId, String buttonName) {
         User currentUser = ObjectUtils.userService.getUserByChatId(chatId);
         return UI_STRATEGY_MAP.get(currentUser != null ? currentUser.getUserType() : null).replyKeyboardSecondInnerMenu(buttonName);
+    }
+
+    public SendMessage sendMessage(String buttonName, Long chatId) {
+        User currentUser = ObjectUtils.userService.getUserByChatId(chatId);
+        return UI_STRATEGY_MAP.get(currentUser!= null? currentUser.getUserType() : null).sendMessage(buttonName, chatId);
     }
 }
