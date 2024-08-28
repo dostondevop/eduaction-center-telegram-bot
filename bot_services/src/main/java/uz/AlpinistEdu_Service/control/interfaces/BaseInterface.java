@@ -6,6 +6,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 public interface BaseInterface {
 
     ReplyKeyboard replyKeyboardStartMenu();
-    ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName);
-    SendMessage sendMessage(String buttonName, String chatId);
+    ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName, Long chatId);
+    SendMessage sendMessage(String buttonName, Long chatId);
 }

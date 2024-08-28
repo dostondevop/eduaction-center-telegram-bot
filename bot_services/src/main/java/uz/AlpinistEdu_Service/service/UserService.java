@@ -23,6 +23,25 @@ public class UserService implements BaseService<User>{
         return user;
     }
 
+    public String getContact(Long chatId) {
+        List<User> users = read();
+        User user =  users.stream().filter(u -> u.getChatId().equals(chatId)).findFirst().orElse(null);
+        if (user != null) return user.getContact();
+        throw new RuntimeException("User not found");
+    }
+
+    public String listOfAllGuests() {
+        List<User> users = read();
+        int count = 0;
+        StringBuilder guestList = new StringBuilder();
+        for(User user: users) {
+            if (user.getUserType().equals(UserType.GUEST)) {
+                guestList.append(++count).append(". ").append(user.getName()).append("\t\t\t(").append(user.getContact()).append(")").append("\n");
+            }
+        }
+        return guestList.toString();
+    }
+
     @Override
     public User get(UUID user) {
         return null;
