@@ -11,7 +11,6 @@ import uz.AlpinistEdu_Service.utils.ObjectUtils;
 
 import java.util.List;
 
-
 public class AdminInterface implements BaseInterface {
     private static List<String> buttons = List.of("Guests", "Teachers", "Students", "Products", "Groups", "Parents", "TimeTables");
 
