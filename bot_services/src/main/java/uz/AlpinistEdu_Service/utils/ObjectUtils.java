@@ -16,4 +16,5 @@ public class ObjectUtils {
     public static StudentGroupService studentGroupService = new StudentGroupService();
     public static TimeTableService timeTableService = new TimeTableService();
     public static AdminInterface adminInterface = new AdminInterface();
+
 }

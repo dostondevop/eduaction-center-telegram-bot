@@ -7,4 +7,13 @@
   "userType" : "GUEST",
   "userState" : "SHOW_MAIN_MENU",
   "coins" : 0
-}]
+}, {
+  "id" : "c83cf63e-c4e6-41d1-99b7-fa7848efcfbb",
+  "name" : "\uD83C\uDF0F ",
+  "chatId" : 7047804226,
+  "userName" : "Shaddmi13",
+  "contact" : "+998945251554",
+  "userType" : "TEACHER",
+  "userState" : "SHOW_MAIN_MENU",
+  "coins" : 0
+} ]
