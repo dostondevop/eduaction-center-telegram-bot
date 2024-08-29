@@ -25,6 +25,12 @@ public class BotButtonsUtill {
             "TimeTables",
             "Send message to all users");
 
+    public static List<String> TEACHER_MAIN_MENU_BUTTONS = List.of(
+            "Grading Students",
+            "Timetable",
+            "Send message to Students"
+    );
+
     public static final Map<String, List<String>> ADMIN_SECOND_INNER_MENU = Map.of(
             "Guests", List.of(
                     "List of Guests",

@@ -55,7 +55,7 @@ public class AlpinistBot extends TelegramLongPollingBot {
             } else if (user.getUserType().equals(UserType.STUDENT)) {
                 studentOperationsForMessage(update);
             } else if (user.getUserType().equals(UserType.TEACHER)) {
-                teacherOperationsForMessage(update);
+                teacherOperationsForMessage(update, user);
             }
         } else if (update.hasCallbackQuery()) {
             Long chatId = update.getCallbackQuery().getMessage().getChatId();
@@ -121,8 +121,24 @@ public class AlpinistBot extends TelegramLongPollingBot {
         //TODO MIRZAAHMAD
     }
 
-    private void teacherOperationsForMessage(Update update) {
+    private void teacherOperationsForMessage(Update update, User user) {
+        String text = update.getMessage().getText();
+        Long chatId = update.getMessage().getChatId();
         //TODO
+        if (user.getUserState().equals(UserState.SHOW_MAIN_MENU) & StringUtils.equals(text, BotConstanta.GRADING_STUDENTS_BUTTON)) {
+            ReplyKeyboard replyKeyboard = menuBotService.getSecondInnerMenu(chatId, text);
+            execute(chatId, BotConstanta.SELECT_GROUP, replyKeyboard);
+            user.setUserState(UserState.GRADING_STUDENTS);
+            userBotService.updateUserState(user);
+        }  else if (BotConstanta.BACK_BUTTON.equals(text)) {
+            if (user.getUserState() == UserState.SHOW_SECOND_MENU) {
+                user.setUserState(UserState.SHOW_MAIN_MENU);
+                userBotService.updateUserState(user);
+                execute(chatId, BotConstanta.SELECT_FROM_MENU, menuBotService.getMainMenu(chatId));
+            }
+        } else if (user.getUserState().equals(UserState.SHOW_MAIN_MENU)) {
+            execute(chatId, BotConstanta.SELECT_FROM_MENU, menuBotService.getMainMenu(chatId));
+        }
     }
 
     private void adminOperationsForCallbackQuery(Update update) {

@@ -13,6 +13,13 @@ public class GroupService implements BaseService<Group> {
 
     @Override
     public Group get(UUID id) {
+        List<Group> groups = read();
+
+        for (Group group: groups) {
+            if (group.getId().equals(id)) {
+                return group;
+            }
+        }
         return null;
     }
 
