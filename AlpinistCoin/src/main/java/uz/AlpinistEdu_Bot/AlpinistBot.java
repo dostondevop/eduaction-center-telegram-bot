@@ -11,9 +11,9 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.AlpinistEdu_Bot.botService.MenuBotService;
 import uz.AlpinistEdu_Bot.botService.UserBotService;
 import uz.AlpinistEdu_Bot.factory.UserFactory;
-import uz.AlpinistEdu_Bot.enums.*;
-import uz.AlpinistEdu_Bot.model.User;
-import uz.AlpinistEdu_Bot.utils.*;
+import uz.AlpinistEdu_Service.enums.*;
+import uz.AlpinistEdu_Service.model.User;
+import uz.AlpinistEdu_Service.utils.*;
 
 import java.util.List;
 

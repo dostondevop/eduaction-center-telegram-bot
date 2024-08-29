@@ -1,0 +1,7 @@
+package uz.AlpinistEdu_Service.enums;
+
+public enum UserState {
+
+    GET_CONTACT,GRADING_STUDENT,SHOW_MAIN_MENU, ADMIN_ADD_TEACHER, ADMIN_GUESTS_MENU,MARKING_ABSENCE;
+
+}

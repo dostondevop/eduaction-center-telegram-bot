@@ -1,8 +1,8 @@
 package uz.AlpinistEdu_Bot.factory;
 
-import uz.AlpinistEdu_Bot.enums.UserState;
-import uz.AlpinistEdu_Bot.enums.UserType;
-import uz.AlpinistEdu_Bot.model.User;
+import uz.AlpinistEdu_Service.enums.UserState;
+import uz.AlpinistEdu_Service.enums.UserType;
+import uz.AlpinistEdu_Service.model.User;
 
 import java.util.UUID;
 

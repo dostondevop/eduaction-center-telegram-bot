@@ -2,7 +2,7 @@ package uz.AlpinistEdu_Bot.botService;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
-import uz.AlpinistEdu_Bot.utils.ObjectUtils;
+import uz.AlpinistEdu_Service.utils.ObjectUtils;
 
 public class MenuBotService {
     public ReplyKeyboard getMainMenu(Long chatId) {

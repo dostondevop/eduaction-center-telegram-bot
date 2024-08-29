@@ -1,7 +1,7 @@
 package uz.AlpinistEdu_Bot.botService;
 
-import uz.AlpinistEdu_Bot.model.User;
-import uz.AlpinistEdu_Bot.utils.ObjectUtils;
+import uz.AlpinistEdu_Service.model.User;
+import uz.AlpinistEdu_Service.utils.ObjectUtils;
 
 import java.util.List;
 
