@@ -1,0 +1,37 @@
+package uz.AlpinistEdu_Bot.service;
+
+import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import uz.AlpinistEdu_Bot.model.User;
+import uz.AlpinistEdu_Bot.enums.UserType;
+import uz.AlpinistEdu_Bot.utils.ObjectUtils;
+import uz.AlpinistEdu_Bot.control.interfaces.*;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class MenuService {
+    private static final Map<UserType, BaseInterface> UI_STRATEGY_MAP = new HashMap<>();
+
+    static {
+        UI_STRATEGY_MAP.put(UserType.ADMIN, new AdminInterface());
+        UI_STRATEGY_MAP.put(UserType.GUEST, new GuestInterface());
+        UI_STRATEGY_MAP.put(UserType.TEACHER, new TeacherInterface());
+        UI_STRATEGY_MAP.put(UserType.STUDENT, new StudentInterface());
+    }
+
+    public ReplyKeyboard getMainMenu(Long chatId) {
+        User currentUser = ObjectUtils.userService.getUserByChatId(chatId);
+        return UI_STRATEGY_MAP.get(currentUser != null ? currentUser.getUserType() : null).replyKeyboardStartMenu();
+    }
+
+    public ReplyKeyboard getSecondInnerMenu(Long chatId, String buttonName) {
+        User currentUser = ObjectUtils.userService.getUserByChatId(chatId);
+        return UI_STRATEGY_MAP.get(currentUser != null ? currentUser.getUserType() : null).replyKeyboardSecondInnerMenu(buttonName, chatId);
+    }
+
+    public SendMessage getSendMessage(Long chatId, String buttonName) {
+        User currentUser = ObjectUtils.userService.getUserByChatId(chatId);
+        return UI_STRATEGY_MAP.get(currentUser != null ? currentUser.getUserType() : null).sendMessage(buttonName, chatId);
+    }
+}

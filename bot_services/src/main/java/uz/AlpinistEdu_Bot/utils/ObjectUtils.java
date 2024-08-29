@@ -1,0 +1,20 @@
+package uz.AlpinistEdu_Bot.utils;
+
+import lombok.experimental.UtilityClass;
+import uz.AlpinistEdu_Bot.control.interfaces.AdminInterface;
+import uz.AlpinistEdu_Bot.service.*;
+
+@UtilityClass
+public class ObjectUtils {
+    public static GroupService groupService = new GroupService();
+    public static MenuService menuService = new MenuService();
+    public static ParentStudentService parentStudentService = new ParentStudentService();
+    public static TeacherGroupService teacherGroupService = new TeacherGroupService();
+    public static UserService userService = new UserService();
+    public static PointService pointService = new PointService();
+    public static ProductService productService = new ProductService();
+    public static StudentGroupService studentGroupService = new StudentGroupService();
+    public static TimeTableService timeTableService = new TimeTableService();
+    public static AdminInterface adminInterface = new AdminInterface();
+
+}
