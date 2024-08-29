@@ -1,8 +1,8 @@
-package uz.AlpinistEdu_Bot.BotService;
+package uz.AlpinistEdu_Bot.botService;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
-import uz.AlpinistEdu_Bot.BotService.control.interfaces.*;
+import uz.AlpinistEdu_Bot.botService.control.interfaces.*;
 import uz.AlpinistEdu_Service.enums.UserType;
 import uz.AlpinistEdu_Service.model.User;
 

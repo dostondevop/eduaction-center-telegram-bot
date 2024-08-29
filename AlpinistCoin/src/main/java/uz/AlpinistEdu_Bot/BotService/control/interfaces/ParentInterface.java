@@ -1,9 +1,7 @@
-package uz.AlpinistEdu_Bot.BotService.control.interfaces;
+package uz.AlpinistEdu_Bot.botService.control.interfaces;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
-
-import java.util.List;
 
 public class ParentInterface implements BaseInterface {
     @Override

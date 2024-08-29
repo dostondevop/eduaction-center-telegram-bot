@@ -1,4 +1,4 @@
-package uz.AlpinistEdu_Bot.BotService;
+package uz.AlpinistEdu_Bot.botService;
 
 import uz.AlpinistEdu_Service.model.User;
 import uz.AlpinistEdu_Service.utils.ObjectUtils;

@@ -1,4 +1,4 @@
-package uz.AlpinistEdu_Bot.Factory;
+package uz.AlpinistEdu_Bot.factory;
 
 import uz.AlpinistEdu_Service.enums.UserState;
 import uz.AlpinistEdu_Service.enums.UserType;
