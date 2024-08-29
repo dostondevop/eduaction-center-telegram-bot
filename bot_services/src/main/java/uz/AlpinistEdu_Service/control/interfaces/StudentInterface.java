@@ -15,7 +15,6 @@ public class StudentInterface implements BaseInterface {
     
     @Override
     public ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName, Long chatId) {
-
         return null;
     }
 

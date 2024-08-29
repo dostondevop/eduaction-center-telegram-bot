@@ -2,7 +2,6 @@ package uz.AlpinistEdu_Service.BotService;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
-import uz.AlpinistEdu_Service.model.User;
 import uz.AlpinistEdu_Service.utils.ObjectUtils;
 
 public class MenuBotService {
@@ -17,6 +16,4 @@ public class MenuBotService {
     public SendMessage getSendMessage(Long chatId, String buttonName) {
        return ObjectUtils.menuService.getSendMessage(chatId,buttonName);
     }
-
-
 }

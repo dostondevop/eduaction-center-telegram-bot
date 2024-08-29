@@ -1,19 +1,10 @@
 [ {
-  "id" : "3b9c5f72-ddb3-45fd-b08c-a791a1e4d249",
-  "name" : "Dostonbek ",
-  "chatId" : 1470163509,
-  "userName" : "dostonbek_qurolboyev",
-  "contact" : "+998881207788",
+  "id" : "c92b5a24-03e9-4a83-a8d2-6413a036636a",
+  "name" : "Muhammadamin Erkinboev",
+  "chatId" : 796352929,
+  "userName" : "MuxammadaminErkinboev",
+  "contact" : "+998944376899",
   "userType" : "GUEST",
-  "userState" : "SHOW_MAIN_MENU",
-  "coins" : 0
-}, {
-  "id" : "c83cf63e-c4e6-41d1-99b7-fa7848efcfbb",
-  "name" : "\uD83C\uDF0F ",
-  "chatId" : 7047804226,
-  "userName" : "Shaddmi13",
-  "contact" : "+998945251554",
-  "userType" : "TEACHER",
   "userState" : "SHOW_MAIN_MENU",
   "coins" : 0
 } ]

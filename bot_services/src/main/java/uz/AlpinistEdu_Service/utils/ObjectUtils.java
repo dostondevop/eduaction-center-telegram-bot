@@ -2,6 +2,7 @@ package uz.AlpinistEdu_Service.utils;
 
 import lombok.experimental.UtilityClass;
 import uz.AlpinistEdu_Service.control.interfaces.AdminInterface;
+import uz.AlpinistEdu_Service.control.interfaces.GuestInterface;
 import uz.AlpinistEdu_Service.service.*;
 
 @UtilityClass
@@ -16,5 +17,5 @@ public class ObjectUtils {
     public static StudentGroupService studentGroupService = new StudentGroupService();
     public static TimeTableService timeTableService = new TimeTableService();
     public static AdminInterface adminInterface = new AdminInterface();
-
+    public static GuestInterface guestInterface = new GuestInterface();
 }

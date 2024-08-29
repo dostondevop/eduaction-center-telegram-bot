@@ -15,6 +15,10 @@ public class UserBotService {
         return ObjectUtils.userService.getUserByChatId(chatId);
     }
 
+    public void update(User user) {
+        ObjectUtils.userService.updateUserState(user);
+    }
+
     public List<User> getList() {
         return ObjectUtils.userService.getList();
     }

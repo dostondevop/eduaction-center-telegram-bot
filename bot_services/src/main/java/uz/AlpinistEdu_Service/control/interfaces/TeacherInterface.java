@@ -15,7 +15,6 @@ public class TeacherInterface implements BaseInterface {
     @Override
     public ReplyKeyboard replyKeyboardStartMenu() {
       return BotUtil.replyKeyboardMarkup(buttons,2);
-
     }
 
     @Override
@@ -27,5 +26,4 @@ public class TeacherInterface implements BaseInterface {
     public SendMessage sendMessage(String buttonName, Long chatId) {
         return null;
     }
-
 }

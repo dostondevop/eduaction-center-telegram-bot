@@ -10,6 +10,8 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import java.util.HashMap;
 import java.util.Map;
 
+import static uz.AlpinistEdu_Service.utils.ObjectUtils.userService;
+
 public class MenuService {
     private static final Map<UserType, BaseInterface> UI_STRATEGY_MAP = new HashMap<>();
 
@@ -21,17 +23,17 @@ public class MenuService {
     }
 
     public ReplyKeyboard getMainMenu(Long chatId) {
-        User currentUser = ObjectUtils.userService.getUserByChatId(chatId);
+        User currentUser = userService.getUserByChatId(chatId);
         return UI_STRATEGY_MAP.get(currentUser != null ? currentUser.getUserType() : null).replyKeyboardStartMenu();
     }
 
     public ReplyKeyboard getSecondInnerMenu(Long chatId, String buttonName) {
-        User currentUser = ObjectUtils.userService.getUserByChatId(chatId);
+        User currentUser = userService.getUserByChatId(chatId);
         return UI_STRATEGY_MAP.get(currentUser != null ? currentUser.getUserType() : null).replyKeyboardSecondInnerMenu(buttonName, chatId);
     }
 
     public SendMessage getSendMessage(Long chatId, String buttonName) {
-        User currentUser = ObjectUtils.userService.getUserByChatId(chatId);
+        User currentUser = userService.getUserByChatId(chatId);
         return UI_STRATEGY_MAP.get(currentUser != null ? currentUser.getUserType() : null).sendMessage(buttonName, chatId);
     }
 }

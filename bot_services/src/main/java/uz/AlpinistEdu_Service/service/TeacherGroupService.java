@@ -38,6 +38,5 @@ public class TeacherGroupService implements BaseService<TeacherGroup> {
 
     @Override
     public void write(List<TeacherGroup> teacherGroups) {
-
     }
 }
