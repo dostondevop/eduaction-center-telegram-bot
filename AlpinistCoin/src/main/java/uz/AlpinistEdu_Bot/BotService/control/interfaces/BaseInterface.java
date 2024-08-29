@@ -8,6 +8,6 @@ import java.util.List;
 public interface BaseInterface {
 
     ReplyKeyboard replyKeyboardStartMenu();
-    ReplyKeyboard replyKeyboardSecondInnerMenu(List<String> buttons, Long chatId);
+    ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName, Long chatId);
     SendMessage sendMessage(String buttonName, Long chatId);
 }

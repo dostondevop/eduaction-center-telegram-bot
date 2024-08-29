@@ -2,11 +2,11 @@ package uz.AlpinistEdu_Bot.BotService.control.interfaces;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
-import uz.AlpinistEdu_Bot.enums.UserState;
-import uz.AlpinistEdu_Bot.model.User;
-import uz.AlpinistEdu_Bot.utils.BotConstanta;
-import uz.AlpinistEdu_Bot.utils.BotUtil;
-import uz.AlpinistEdu_Bot.utils.ObjectUtils;
+import uz.AlpinistEdu_Service.enums.UserState;
+import uz.AlpinistEdu_Service.model.User;
+import uz.AlpinistEdu_Service.utils.BotButtonsUtill;
+import uz.AlpinistEdu_Service.utils.BotUtil;
+import uz.AlpinistEdu_Service.utils.ObjectUtils;
 
 import java.util.List;
 
@@ -14,11 +14,12 @@ public class AdminInterface implements BaseInterface {
 
     @Override
     public ReplyKeyboard replyKeyboardStartMenu() {
-        return BotUtil.replyKeyboardMarkup(BotConstanta.ADMIN_MAIN_MENU_BUTTONS, 2);
+        return BotUtil.replyKeyboardMarkup(BotButtonsUtill.ADMIN_MAIN_MENU_BUTTONS, 2);
     }
 
     @Override
-    public ReplyKeyboard replyKeyboardSecondInnerMenu(List<String> buttons, Long chatId) {
+    public ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName, Long chatId) {
+        List<String> buttons = BotButtonsUtill.ADMIN_SECOND_INNER_MENU.get(buttonName);
         return BotUtil.replyKeyboardMarkup(buttons, 2);
     }
 

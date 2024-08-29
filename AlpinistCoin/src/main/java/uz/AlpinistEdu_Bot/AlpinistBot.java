@@ -12,11 +12,12 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import uz.AlpinistEdu_Bot.BotService.MenuBotService;
 import uz.AlpinistEdu_Bot.BotService.UserBotService;
 import uz.AlpinistEdu_Bot.Factory.UserFactory;
-import uz.AlpinistEdu_Bot.enums.UserState;
-import uz.AlpinistEdu_Bot.enums.UserType;
-import uz.AlpinistEdu_Bot.model.User;
-import uz.AlpinistEdu_Bot.utils.BotConstanta;
-import uz.AlpinistEdu_Bot.utils.BotUtil;
+import uz.AlpinistEdu_Service.enums.UserState;
+import uz.AlpinistEdu_Service.enums.UserType;
+import uz.AlpinistEdu_Service.model.User;
+import uz.AlpinistEdu_Service.utils.BotButtonsUtill;
+import uz.AlpinistEdu_Service.utils.BotConstanta;
+import uz.AlpinistEdu_Service.utils.BotUtil;
 
 import java.util.List;
 
@@ -37,18 +38,18 @@ public class AlpinistBot extends TelegramLongPollingBot {
 
             if (StringUtils.equals(BotConstanta.START, message.getText())) {
                 sendPhoneNumberRequest(message.getChatId());
-            } else if (user.getUserState() == UserState.GET_CONTACT & message.hasContact()) {
+            } else if (user.getUserState().equals(UserState.GET_CONTACT) & message.hasContact()) {
                 String phoneNumber = message.getContact().getPhoneNumber();
                 String name = (message.getChat().getFirstName() != null ? message.getChat().getFirstName() : "") + " " + (message.getChat().getLastName() != null ? message.getChat().getLastName() : "");
                 String username = message.getChat().getUserName();
-                user = userFactory.createDefaultUser(chatId, name, username, phoneNumber);
+                user = userFactory.createUser(chatId, name, username, phoneNumber);
                 userBotService.add(user);
 
                 sendMessage(chatId, BotConstanta.HELLO + user.getName() + BotConstanta.REGISTERED_AS_GUEST);
 
                 execute(chatId, BotConstanta.SELECT_FROM_MENU, menuBotService.getMainMenu(chatId));
             } else if (user.getUserType().equals(UserType.GUEST)) {
-                guestOperationsForMessage(update);
+                guestOperationsForMessage(update, user);
             } else if (user.getUserType().equals(UserType.ADMIN)) {
                 adminOperationsForMessage(update);
             } else if (user.getUserType().equals(UserType.STUDENT)) {
@@ -72,8 +73,29 @@ public class AlpinistBot extends TelegramLongPollingBot {
         }
     }
 
-    private void guestOperationsForMessage(Update update) {
-     //TODO MUHAMMADAMIN
+    private void guestOperationsForMessage(Update update, User user) {
+        Message message = update.getMessage();
+        Long chatId = message.getChatId();
+        String text = message.getText();
+        if (user.getUserState().equals(UserState.SHOW_MAIN_MENU) & BotButtonsUtill.GUEST_MAIN_MENU_BUTTONS.contains(text)) {
+            execute(chatId, BotConstanta.SELECT_FROM_MENU, menuBotService.getSecondInnerMenu(chatId, text));
+            user.setUserState(UserState.SHOW_SECOND_MENU);
+            userBotService.updateUserState(user);
+        } else if (user.getUserState().equals(UserState.SHOW_SECOND_MENU) & BotButtonsUtill.GUEST_ALL_SECOND_MENU_BUTTONS.contains(text)) {
+            try {
+                execute(menuBotService.getSendMessage(chatId, text));
+            } catch (TelegramApiException e) {
+                throw new RuntimeException(e);
+            }
+        } else if (BotConstanta.BACK_BUTTON.equals(text)) {
+            if (user.getUserState() == UserState.SHOW_SECOND_MENU) {
+                user.setUserState(UserState.SHOW_MAIN_MENU);
+                userBotService.updateUserState(user);
+                execute(chatId, BotConstanta.SELECT_FROM_MENU, menuBotService.getMainMenu(chatId));
+            }
+        } else if (user.getUserState() == UserState.SHOW_MAIN_MENU) {
+            execute(chatId, BotConstanta.SELECT_FROM_MENU, menuBotService.getMainMenu(chatId));
+        }
     }
 
     private void adminOperationsForMessage(Update update) {
@@ -83,10 +105,9 @@ public class AlpinistBot extends TelegramLongPollingBot {
         User user = userBotService.getUserByChatId(chatId);
 
         ReplyKeyboard replyKeyboard1 = menuBotService.getMainMenu(chatId);
-        SendMessage sendMessage = menuBotService.getSendMessage(chatId, messageText);
 
-        if (user.getUserState().equals(UserState.SHOW_MAIN_MENU) & StringUtils.equals(BotConstanta.GUESTS_BUTTON, messageText)) {
-            execute(chatId, BotConstanta.SELECT_FROM_MENU, menuBotService.getSecondInnerMenu(BotConstanta.ADMIN_GUEST_MENU_BUTTONS, chatId));
+        if (user.getUserState().equals(UserState.SHOW_MAIN_MENU) & BotButtonsUtill.ADMIN_MAIN_MENU_BUTTONS.contains(messageText)) {
+            execute(chatId, BotConstanta.SELECT_FROM_MENU, menuBotService.getSecondInnerMenu(chatId, messageText));
 
         } else if (user.getUserState().equals(UserState.SHOW_MAIN_MENU) & StringUtils.equals(BotConstanta.TEACHERS_BUTTON, messageText)) {
 
@@ -147,7 +168,6 @@ public class AlpinistBot extends TelegramLongPollingBot {
         message.setText(BotConstanta.PLEASE_SHARE_PHONE_NUMBER);
 
         message.setReplyMarkup(BotUtil.getRequestPhoneNumberKeyboard());
-
         try {
             execute(message);
         } catch (TelegramApiException e) {
