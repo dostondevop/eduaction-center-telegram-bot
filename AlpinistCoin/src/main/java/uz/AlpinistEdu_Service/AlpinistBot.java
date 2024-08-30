@@ -3,28 +3,20 @@ package uz.AlpinistEdu_Service;
 import lombok.SneakyThrows;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
-import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
-import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.methods.send.*;
+import org.telegram.telegrambots.meta.api.objects.*;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import uz.AlpinistEdu_Service.BotService.MenuBotService;
-import uz.AlpinistEdu_Service.BotService.UserBotService;
+import uz.AlpinistEdu_Service.BotService.*;
 import uz.AlpinistEdu_Service.Factory.UserFactory;
-import uz.AlpinistEdu_Service.control.interfaces.BaseInterface;
-import uz.AlpinistEdu_Service.control.interfaces.GuestInterface;
 import uz.AlpinistEdu_Service.enums.*;
 import uz.AlpinistEdu_Service.model.User;
 import uz.AlpinistEdu_Service.utils.*;
 
-import javax.ws.rs.HEAD;
-import java.util.List;
-import java.util.UUID;
-
-import static uz.AlpinistEdu_Service.enums.UserState.SHOW_MAIN_MENU;
-import static uz.AlpinistEdu_Service.enums.UserState.SHOW_SECOND_MENU;
-import static uz.AlpinistEdu_Service.utils.BotButtonsUtill.getInfo;
-import static uz.AlpinistEdu_Service.utils.MessagesUtill.TEXT_RUS_TILI;
+import java.io.File;
+import java.util.*;
+import static uz.AlpinistEdu_Service.enums.UserState.*;
+import static uz.AlpinistEdu_Service.utils.guestUtills.GuestOperationButtonsConstantsUtill.*;
 import static uz.AlpinistEdu_Service.utils.ObjectUtils.*;
 
 public class AlpinistBot extends TelegramLongPollingBot {
@@ -34,6 +26,7 @@ public class AlpinistBot extends TelegramLongPollingBot {
     private static UserBotService userBotService = new UserBotService();
     private static MenuBotService menuBotService = new MenuBotService();
     private static UserFactory userFactory = new UserFactory();
+    private static String PATH = "bot_services/src/main/resources/photos/photo_2024-08-29_16-38-29.jpg";
 
     @Override
     public void onUpdateReceived(Update update) {
@@ -79,131 +72,128 @@ public class AlpinistBot extends TelegramLongPollingBot {
         }
     }
 
+    @SneakyThrows
     private void guestOperationsForMessage(Update update, User user) {
         Message message = update.getMessage();
         Long chatId = message.getChatId();
         String text = message.getText();
-        if (("Markaz haqida").equals(text)) {
+        if (ABOUT_CENTER.equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
             user.setUserState(SHOW_SECOND_MENU);
             userBotService.update(user);
-        } else if (("Bizning Ustozlarimiz").equals(text)) {
+        } else if (OUR_TEACHERS.equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
             user.setUserState(SHOW_SECOND_MENU);
             userBotService.update(user);
-        } else if (("Kurslarimiz").equals(text)) {
+        } else if (OUR_COURSES.equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
             user.setUserState(SHOW_SECOND_MENU);
             userBotService.update(user);
-        } else if (("Filiallarimiz").equals(text)) {
+        } else if (OUR_BRANCHES.equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
             user.setUserState(SHOW_SECOND_MENU);
             userBotService.update(user);
-        } else if (("Mutaxassis bilan aloqa").equals(text)) {
+        } else if (CONTACT_WITH_SPECIALISTS.equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
             user.setUserState(SHOW_SECOND_MENU);
             userBotService.update(user);
-        } else if (("Imtihonga ro'yxatdan o'tish").equals(text)) {
+        } else if (REGISTRATION_TO_TEST.equals(text)) {
             execute(chatId, text, menuService.getSecondInnerMenu(chatId, text));
             user.setUserState(SHOW_SECOND_MENU);
             userBotService.update(user);
-        } else if (("\uD83D\uDD19Orqaga").equals(text)) {
+        } else if (BACK_BUTTON.equals(text)) {
             if (user.getUserState() == SHOW_SECOND_MENU) {
                 user.setUserState(SHOW_MAIN_MENU);
                 userBotService.update(user);
-                execute(chatId, "Menu", menuService.getMainMenu(chatId));
+                execute(chatId, MENU, menuService.getMainMenu(chatId));
             }
-        } else if (("Ingliz Tili").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (ENGLISH.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Rus Tili").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (RUSSIAN.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Matematika").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (MATH.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Mental Arifmetika").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (MENTAL_ARITHMETIC.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Umumiy ma'lumotlar").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (ABOUT_ALPINIST_CENTER.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Afzalliklar").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (ADVANTAGES_OF_ALPINIST.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Yutuqlar").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (ACHIEVEMENTS_OF_ALPINIST.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Mr Fazliddin").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (MR_FAZLIDDIN.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+            sendPhotoWithText(chatId,text,PATH);
+        } else if (MR_SUNNAT.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Mr Sunnat").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (MS_LILIYA.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Ms Liliya").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (MS_AZIZA.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Ms Aziza").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (MR_JAVOXIR.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Mr Javoxir").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (MR_MIRZAAHMAD.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Mr MirzaAhmad").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (CONTACT_US_WITH_TEL.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Tel:").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (CONTACT_US_WITH_EMAIL.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
                 throw new RuntimeException(e);
             }
-        } else if (("Gmail:").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
-            try {
-                execute(guestInterface.sendMessage(text, chatId));
-            } catch (TelegramApiException e) {
-                throw new RuntimeException(e);
-            }
-        } else if (("Ro'yxatdan o'tish").equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
+        } else if (REGISTRATION.equals(text) & user.getUserState() == SHOW_SECOND_MENU) {
             try {
                 execute(guestInterface.sendMessage(text, chatId));
             } catch (TelegramApiException e) {
@@ -271,6 +261,18 @@ public class AlpinistBot extends TelegramLongPollingBot {
             execute(message);
         } catch (TelegramApiException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void sendPhotoWithText(Long chatId, String text, String Path) {
+        SendPhoto sendPhoto = new SendPhoto();
+        sendPhoto.setChatId(chatId);
+        sendPhoto.setCaption(text);
+        sendPhoto.setPhoto(new InputFile(new File(PATH)));
+        try {
+            execute(sendPhoto);
+        } catch (TelegramApiException e) {
+            throw new RuntimeException(e);
         }
     }
 

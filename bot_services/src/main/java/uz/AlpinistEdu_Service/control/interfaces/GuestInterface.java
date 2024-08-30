@@ -6,7 +6,7 @@ import uz.AlpinistEdu_Service.utils.BotUtil;
 
 import java.util.List;
 
-import static uz.AlpinistEdu_Service.utils.BotButtonsUtill.*;
+import static uz.AlpinistEdu_Service.utils.guestUtills.GuestBotButtonsConstantsUtill.*;
 
 public class GuestInterface implements BaseInterface {
     @Override

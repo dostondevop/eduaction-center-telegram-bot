@@ -1,6 +1,9 @@
-package uz.AlpinistEdu_Service.utils;
+package uz.AlpinistEdu_Service.utils.guestUtills;
 
-public class MessagesUtill {
+import lombok.experimental.UtilityClass;
+
+@UtilityClass
+public class GuestMessagesConstantsUtill {
     public static final  String TEXT_ABOUT_LEARNING_CENTER = """ 
             Alpinist O'quv Markazi:
                         
@@ -68,7 +71,7 @@ public class MessagesUtill {
             yaxshisi ularning darslarini kelib ko'rish kerak.
             "Men hech qachon rus tilida gaplasha olmasam kerak"
             deb yurgan odam ham, ustozimiz bilan, rus tilini oson o'rganishni boshlavoradi.
-            Ushbu guruhda (https://t.me/russian_ll) ustozimiznig darslaridan lavhalar va
+            {Ushbu guruhda}(https://t.me/russian_ll) ustozimiznig darslaridan lavhalar va
             o'quvchilarning ingliz tilida gapirishlari berib borilgan albatta ko'ring.
             Shunda ham ustozimiz haqida qisqacha aytib o'tamiz: 10 yildan ko'proq
             tajriba va ajoyib natijalar sohibasi. O'zlarinig ona tilisi
@@ -133,7 +136,7 @@ public class MessagesUtill {
            Kurslarga yozilish uchun
            Qo'ng'iroq qiling         +998900019350""";
 
-    public static final String TEXT_PHONE_NUMBER = "Bizning telefon raqamimiz: +998 (90) 001-93-50";
+    public static final String TEXT_PHONE_NUMBER = "Bizning telefon raqamimiz: +998900019350";
 
 
 }

@@ -1,13 +1,13 @@
-package uz.AlpinistEdu_Service.utils;
+package uz.AlpinistEdu_Service.utils.guestUtills;
 
 import lombok.experimental.UtilityClass;
 
 import java.util.*;
 
-import static uz.AlpinistEdu_Service.utils.MessagesUtill.*;
+import static uz.AlpinistEdu_Service.utils.guestUtills.GuestMessagesConstantsUtill.*;
 
 @UtilityClass
-public class BotButtonsUtill {
+public class GuestBotButtonsConstantsUtill {
     public static final List<String> GUEST_MAIN_MENU_BUTTONS = List.of(
             "Markaz haqida",
             "Kurslarimiz",
@@ -108,7 +108,7 @@ public class BotButtonsUtill {
                 return TEXT_PHONE_NUMBER;
             }
             case "Gmail:" -> {
-                return "Bizning Gmail manzilimiz: [alpinistedu@gmail.com](mailto:muxammadaminerkinboev6899@gmail.com)";
+                return "Bizning Gmail manzilimiz: [alpinistedu@gmail.com](\nmuxammadaminerkinboev6899@gmail.com)";
             }
 
             // Subscription options
