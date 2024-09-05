@@ -1,6 +1,7 @@
 package uz.AlpinistEdu_Service;
 
 import lombok.SneakyThrows;
+import org.apache.commons.lang3.StringUtils;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.ForwardMessage;
 import org.telegram.telegrambots.meta.api.methods.send.*;
@@ -18,6 +19,7 @@ import java.util.*;
 import static uz.AlpinistEdu_Service.enums.UserState.*;
 import static uz.AlpinistEdu_Service.utils.guestUtills.GuestOperationButtonsConstantsUtill.*;
 import static uz.AlpinistEdu_Service.utils.ObjectUtils.*;
+import static uz.AlpinistEdu_Service.utils.studentUtill.StudentOperationButtonsConstantsUtill.*;
 
 public class AlpinistBot extends TelegramLongPollingBot {
 
@@ -52,7 +54,7 @@ public class AlpinistBot extends TelegramLongPollingBot {
             } else if (user.getUserType().equals(UserType.ADMIN)) {
                 adminOperationsForMessage(update);
             } else if (user.getUserType().equals(UserType.STUDENT)) {
-                studentOperationsForMessage(update);
+                studentOperationsForMessage(update, user);
             } else if (user.getUserType().equals(UserType.TEACHER)) {
                 teacherOperationsForMessage(update);
             }
@@ -218,9 +220,38 @@ public class AlpinistBot extends TelegramLongPollingBot {
         }
     }
 
-    private void studentOperationsForMessage(Update update) {
-        //TODO MIRZAAHMAD
+    @SneakyThrows
+    private void studentOperationsForMessage(Update update, User user) {
+        Message message = update.getMessage();
+        Long chatId = message.getChatId();
+        String text = message.getText();
+
+        // Define student states similar to guest states
+        if (StringUtils.equals(COINS, text)) {
+            execute(chatId, text, menuBotService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
+        } else if (StringUtils.equals(MARKET, text)) {
+            execute(chatId, text, menuBotService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
+        } else if (StringUtils.equals(TEACHERS, text)) {
+            execute(chatId, text, menuBotService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
+        } else if (StringUtils.equals(COURSES, text)) {
+            execute(chatId, text, menuBotService.getSecondInnerMenu(chatId, text));
+            user.setUserState(SHOW_SECOND_MENU);
+            userBotService.update(user);
+        } else if (StringUtils.equals(BACK_BUTTON, text)) { // Back button functionality
+            if (user.getUserState() == SHOW_SECOND_MENU ) {
+                user.setUserState(SHOW_MAIN_MENU);
+                userBotService.update(user);
+                execute(chatId, MENU, menuService.getMainMenu(chatId));
+            }
+        }
     }
+
 
     private void teacherOperationsForMessage(Update update) {
         //TODO

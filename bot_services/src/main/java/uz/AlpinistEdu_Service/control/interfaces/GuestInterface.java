@@ -3,9 +3,7 @@ package uz.AlpinistEdu_Service.control.interfaces;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import uz.AlpinistEdu_Service.utils.BotUtil;
-
 import java.util.List;
-
 import static uz.AlpinistEdu_Service.utils.guestUtills.GuestBotButtonsConstantsUtill.*;
 
 public class GuestInterface implements BaseInterface {
