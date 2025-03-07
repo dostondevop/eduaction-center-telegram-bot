@@ -7,12 +7,12 @@ import java.util.stream.IntStream;
 
 import uz.AlpinistEdu_Service.model.*;
 import lombok.experimental.UtilityClass;
+import uz.AlpinistEdu_Service.model.connections.*;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import uz.AlpinistEdu_Service.model.connections.*;
 
 @UtilityClass
 public class BotUtil {
@@ -95,8 +95,10 @@ public class BotUtil {
         } else if (model instanceof GroupTimeTable groupTimeTable) {
             button.setText("Group TimeTable " + groupTimeTable.getId());
             callbackData = CallBackUtils.GROUP_TIME_TABLE + groupTimeTable.getId();
+        } else if (model instanceof String) {
+            button.setText(model.toString());
+            callbackData = model.toString();
         }
-
         button.setCallbackData(callbackData);
         return button;
     }

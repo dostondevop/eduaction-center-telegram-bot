@@ -1,10 +1,13 @@
 [ {
-  "id" : "3b9c5f72-ddb3-45fd-b08c-a791a1e4d249",
-  "name" : "Dostonbek ",
-  "chatId" : 1470163509,
-  "userName" : "dostonbek_qurolboyev",
-  "contact" : "+998881207788",
-  "userType" : "GUEST",
-  "userState" : "SHOW_MAIN_MENU",
-  "coins" : 0
+  "id" : "25f05855-92c2-4318-b61e-aa00a9a6ab86",
+  "name" : "\uD83C\uDF0F ",
+  "chatId" : 7047804226,
+  "userName" : "Shaddmi13",
+  "contact" : "998945251554",
+  "userType" : "TEACHER",
+  "userState" : "GRADING_STUDENTS",
+  "coins" : 0,
+  "students" : null,
+  "points" : null,
+  "index" : 0
 } ]

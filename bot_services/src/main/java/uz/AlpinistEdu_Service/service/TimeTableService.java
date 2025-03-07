@@ -38,6 +38,5 @@ public class TimeTableService implements BaseService<TimeTable> {
 
     @Override
     public void write(List<TimeTable> timeTables) {
-
     }
 }

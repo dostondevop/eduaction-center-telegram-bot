@@ -8,6 +8,8 @@ import lombok.experimental.SuperBuilder;
 import uz.AlpinistEdu_Service.enums.UserState;
 import uz.AlpinistEdu_Service.enums.UserType;
 
+import java.util.List;
+
 
 @Data
 @SuperBuilder
@@ -21,4 +23,7 @@ public class User extends BaseModel {
     private UserType userType;
     private UserState userState;
     private int coins;
+    private List<User> students;
+    private List<Point> points;
+    private int index;
 }

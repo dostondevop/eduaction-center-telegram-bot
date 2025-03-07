@@ -5,8 +5,7 @@ import uz.AlpinistEdu_Service.enums.*;
 import uz.AlpinistEdu_Service.model.User;
 import uz.AlpinistEdu_Service.utils.DataUtils;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class UserService implements BaseService<User>{
 
@@ -44,17 +43,26 @@ public class UserService implements BaseService<User>{
 
     @Override
     public User get(UUID user) {
-        return null;
+        List<User> users = read();
+        return users.stream()
+                .filter(u -> Objects.equals(u.getId(), user))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
     }
 
     @Override
     public boolean has(User user, List<User> list) {
-        return list.stream().anyMatch(u -> u.getChatId().equals(user.getChatId()));
+        return list.stream()
+                .anyMatch(u -> u.getChatId().equals(user.getChatId()));
     }
 
     @Override
     public User getById(UUID id) {
-        return null;
+        List<User> users = read();
+        return users.stream()
+                .filter(u -> Objects.equals(u.getId(), id))
+                .findFirst()
+                .orElseThrow(RuntimeException::new);
     }
 
     @Override
@@ -64,7 +72,8 @@ public class UserService implements BaseService<User>{
 
     @Override
     public List<User> read() {
-        return DataUtils.read(PATH, new TypeReference<List<User>>() {});
+        return DataUtils.read(PATH, new TypeReference<>() {
+        });
     }
 
     @Override
@@ -83,5 +92,31 @@ public class UserService implements BaseService<User>{
             newUser.setUserType(UserType.GUEST);
             return newUser;
         });
+    }
+
+    public void updateUserState(User user) {
+        List<User> users = read();
+
+        int index = users.indexOf(users.stream()
+                .filter(u -> Objects.equals(u.getChatId(), user.getChatId()))
+                .findFirst()
+                .orElseThrow(RuntimeException::new));
+
+        User u = users.get(index);
+        u.setUserState(user.getUserState());
+        users.set(index, u);
+        write(users);
+    }
+
+    public void updateUser(User user) {
+        List<User> users = read();
+
+        int index = users.indexOf(users.stream()
+               .filter(u -> Objects.equals(u.getChatId(), user.getChatId()))
+               .findFirst()
+               .orElseThrow(RuntimeException::new));
+
+        users.set(index, user);
+        write(users);
     }
 }

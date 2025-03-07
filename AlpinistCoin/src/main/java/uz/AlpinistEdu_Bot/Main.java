@@ -1,4 +1,4 @@
-package uz.AlpinistEdu_Service;
+package uz.AlpinistEdu_Bot;
 
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;

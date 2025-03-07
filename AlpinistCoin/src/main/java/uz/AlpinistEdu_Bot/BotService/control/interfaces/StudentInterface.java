@@ -1,14 +1,18 @@
-package uz.AlpinistEdu_Service.control.interfaces;
+package uz.AlpinistEdu_Bot.botService.control.interfaces;
 
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
+import uz.AlpinistEdu_Service.utils.BotUtil;
 
-public class ParentInterface implements BaseInterface {
+import java.util.List;
+
+public class StudentInterface implements BaseInterface {
     @Override
     public ReplyKeyboard replyKeyboardStartMenu() {
-        return null;
+        List<String> buttons = List.of("Coins", "Market", "Teachers", "Courses");
+        return BotUtil.replyKeyboardMarkup(buttons, 2);
     }
-
+    
     @Override
     public ReplyKeyboard replyKeyboardSecondInnerMenu(String buttonName, Long chatId) {
         return null;
